@@ -1,6 +1,9 @@
 ﻿//--------------------------------------------------------------------------------
 // Descargar un fichero de un sitio web usando HttpClient        (10/Feb/22 19.25)
 //
+// Ejemplo basado en:
+// https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient
+//
 // (c) Guillermo Som (Guille), 2022
 //--------------------------------------------------------------------------------
 
@@ -15,7 +18,7 @@ namespace Descargar_Fichero_con_HttpClient_CS
         /// <summary>
         /// El objeto HttpClient se recomiendo instanciarlo solo 1 vez en la aplicación.
         /// </summary>
-        private readonly static System.Net.Http.HttpClient ClienteHttp = new System.Net.Http.HttpClient();
+        private readonly static System.Net.Http.HttpClient ClienteHttp = new();
 
         // En C# 7.1 y superior se puede usar Main como Task y async.
         static async Task Main(string[] args)
@@ -54,6 +57,7 @@ namespace Descargar_Fichero_con_HttpClient_CS
         /// </summary>
         /// <param name="ficWeb">El fichero a descargar (de una dirección URL).</param>
         /// <param name="ficDest">El fichero de destino, donde se guardará el descargado.</param>
+        /// <returns>True o false según haya tenido éxito la descarga o no.</returns>
         public async static Task<bool> DownloadFileAsync(string ficWeb, string ficDest)
         {
             try
@@ -65,10 +69,10 @@ namespace Descargar_Fichero_con_HttpClient_CS
                 {
                     // Guardarlo en el fichero de destino.
                     // Si el fichero destino existe, se sobreescribe.
-                    using (System.IO.FileStream fs = new System.IO.FileStream(ficDest, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.None))
-                    {
-                        await fs.WriteAsync(contenido.AsMemory(0, contenido.Length));
-                    }
+                    using System.IO.FileStream fs = new(ficDest, System.IO.FileMode.Create, 
+                                                                 System.IO.FileAccess.Write, 
+                                                                 System.IO.FileShare.None);
+                    await fs.WriteAsync(contenido.AsMemory(0, contenido.Length));
                 }
                 else
                 {

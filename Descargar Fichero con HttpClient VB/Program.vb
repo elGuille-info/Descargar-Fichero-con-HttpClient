@@ -1,6 +1,9 @@
 '--------------------------------------------------------------------------------
 ' Descargar un fichero de un sitio web usando HttpClient        (10/Feb/22 19.05)
 '
+' Ejemplo basado en:
+' https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient
+'
 ' (c) Guillermo Som (Guille), 2022
 '--------------------------------------------------------------------------------
 Imports System
@@ -47,6 +50,7 @@ Module Program
     ''' </summary>
     ''' <param name="ficWeb">El fichero a descargar (de una dirección URL).</param>
     ''' <param name="ficDest">El fichero de destino, donde se guardará el descargado.</param>
+    ''' <returns>True o false según haya tenido éxito la descarga o no.</returns>
     Public Async Function DownloadFileAsync(ficWeb As String, ficDest As String) As Task(Of Boolean)
         Try
             ' Simplificando la descarga.
@@ -55,7 +59,9 @@ Module Program
             If contenido IsNot Nothing AndAlso contenido.Length > 0 Then
                 ' Guardarlo en el fichero de destino.
                 ' Si el fichero destino existe, se sobreescribe.
-                Using fs As New System.IO.FileStream(ficDest, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.None)
+                Using fs As New System.IO.FileStream(ficDest, System.IO.FileMode.Create,
+                                                              System.IO.FileAccess.Write,
+                                                              System.IO.FileShare.None)
                     Await fs.WriteAsync(contenido.AsMemory(0, contenido.Length))
                 End Using
             Else
