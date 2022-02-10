@@ -4,6 +4,9 @@
 ' Ejemplo basado en:
 ' https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient
 '
+' Publicado en el blog:
+' https://www.elguillemola.com/descargar-ficheros-de-un-sitio-web-usando-httpclient-ejemplos-para-vb-net-y-c/
+'
 ' (c) Guillermo Som (Guille), 2022
 '--------------------------------------------------------------------------------
 Imports System
